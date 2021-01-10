@@ -7,6 +7,8 @@ Bilibili:	https://space.bilibili.com/38626658
 
 Github:  https://github.com/MickLife/KeepAccounts_v2.0
 
+.exe 可执行程序下载（大于30M无法上传）： 链接：https://pan.baidu.com/s/1j6zRbHt75st8fu5lVj6HHw 提取码：bsv4 
+
 欢迎分享给你的朋友，但未经作者授权禁止转载
 
 ### v2.0更新内容
