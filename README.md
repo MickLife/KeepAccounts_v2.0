@@ -4,7 +4,9 @@ KeepAccounts.exe和其配套表格能够实现微信、支付宝官方导出账�
 作者：	MickLife
 
 Bilibili:	https://space.bilibili.com/38626658
+
 Github:  https://github.com/MickLife/KeepAccounts_v2.0
+
 程序和表格下载链接：https://pan.baidu.com/s/1trgfNS6RuXJwy_NWVSo74Q 提取码：84d3
 
 ### v2.0更新内容
