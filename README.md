@@ -1,4 +1,4 @@
-# KeepAccounts_v2.0
+# KeepAccounts_v2.1
 KeepAccounts.exe和其配套表格能够实现微信、支付宝官方导出账单的读取合并，为每笔帐标记类型，并按月份和类型生成可视化图表。再也不用消费一笔记一笔，每月仅需10分钟，记好所有的帐。
 
 作者：	MickLife
@@ -8,6 +8,9 @@ Bilibili:	https://space.bilibili.com/38626658
 Github:  https://github.com/MickLife/KeepAccounts_v2.0
 
 程序和表格下载链接：https://pan.baidu.com/s/1trgfNS6RuXJwy_NWVSo74Q 提取码：84d3
+
+### v2.1更新内容
+修复了支付宝理财收支逻辑错误的bug
 
 ### v2.0更新内容
 
