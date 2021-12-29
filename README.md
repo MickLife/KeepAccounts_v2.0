@@ -7,7 +7,7 @@ Bilibili:	https://space.bilibili.com/38626658
 
 Github:  https://github.com/MickLife/KeepAccounts_v2.0
 
-程序和表格下载链接：https://pan.baidu.com/s/1trgfNS6RuXJwy_NWVSo74Q 提取码：84d3
+程序和表格下载链接：链接：https://pan.baidu.com/s/1NkOOKceVJrmr74P-ajQJtA 提取码：j3vj
 
 ### v2.1更新内容
 修复了支付宝理财收支逻辑错误的bug
