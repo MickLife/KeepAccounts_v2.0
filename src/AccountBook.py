@@ -5,6 +5,7 @@ import numpy as np
 from openpyxl.utils import get_column_letter
 
 from src.Annotator import Annotator
+from src.config import MajorLabels, BillLabels
 
 
 class AccountBook:
@@ -14,7 +15,7 @@ class AccountBook:
         self.dtype = {'日期时间': 'datetime64', '来源': str, '收支': str, '支付状态': str, '交易对方': str, '商品': str,
                       '金额': float, '修订金额': float, '分类1': str, '分类2': str}
         self.column_name = list(self.dtype.keys())
-        database = self.read_database(cfg.DATABASE_PATH)
+        database = self._read_database(cfg.DATABASE_PATH)
         database = self._format_arrange(database)
         self.database = database
         self.data_to_append = pd.DataFrame()
@@ -31,20 +32,34 @@ class AccountBook:
         print(self.database)
         return "The AccountBook has {} rows and {} columns.".format(self.database.shape[0], self.database.shape[1])
 
-    def read_database(self, path: str) -> pd.DataFrame:
+    def _read_database(self, path: str) -> pd.DataFrame:
         cols = list(range(0, len(self.dtype.keys())))
         df = pd.read_excel(path, sheet_name='Records', usecols=cols)
         df.astype(self.dtype)
         return df
 
     def save_database(self, path: str):
-        writer = pd.ExcelWriter(path)  # ！覆盖写文件！
-        self.database.to_excel(writer, sheet_name='Records', index=False)
-        widths = np.array([22, 10, 10, 20, 40, 40, 15, 15, 20, 25])  # 设置excel单元格列宽
-        worksheet = writer.sheets['Records']
-        for i, width in enumerate(widths, 1):
-            worksheet.column_dimensions[get_column_letter(i)].width = width
-        writer.save()
+        with pd.ExcelWriter(path) as writer:
+            self.database.to_excel(writer, sheet_name='Records', index=False)
+            widths = np.array([22, 10, 10, 20, 40, 40, 15, 15, 20, 43])  # 设置excel单元格列宽
+            worksheet = writer.sheets['Records']
+            for i, width in enumerate(widths, 1):
+                worksheet.column_dimensions[get_column_letter(i)].width = width
+
+            df = pd.read_excel(self.cfg.DATABASE_PATH, sheet_name='余额')
+            df.to_excel(writer, sheet_name='余额', index=False)
+            writer.sheets['余额'].column_dimensions[get_column_letter(1)].width = 22
+
+            label_name = []
+            label_value = []
+            for label in BillLabels:
+                label_value.append(label.value)
+                label_name.append(label.name)
+            df2 = pd.DataFrame([label_name, label_value]).transpose()
+            df2.columns = ['label.name', 'label.value']
+            df2.to_excel(writer, sheet_name='Labels', index=False)
+            writer.sheets['Labels'].column_dimensions[get_column_letter(1)].width = 50
+            writer.sheets['Labels'].column_dimensions[get_column_letter(2)].width = 50
         print('Saved AccountBook to dir: {}'.format(path))
 
     def append(self):

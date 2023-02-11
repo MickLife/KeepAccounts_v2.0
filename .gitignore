@@ -1,2 +1,4 @@
-/records/*.csv
-/records/.old_records/
+#/records/*.csv
+#/records/.old_records/*.csv
+*.pyc
+*.csv

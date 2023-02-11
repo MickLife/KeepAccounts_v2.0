@@ -1,5 +1,4 @@
 import re
-
 from src.config import MajorLabels, BillLabels, AutoLabelRules
 
 
@@ -8,19 +7,19 @@ class Annotator:
         self.labels = [label.name for label in BillLabels]
         self.rules = AutoLabelRules().rules
 
-    def do_annotation(self, df):
+    def do_auto_annotation(self, df):
         row_size = df.shape[0]
         for row in range(row_size):
             df_row = df.iloc[row]
             for label, rules in self.rules.items():
-                can_annotate = self.check_rules(df_row, rules)
+                can_annotate = self._check_rules(df_row, rules)
                 if can_annotate:
-                    df.iloc[row, 8] = self.bill_label_to_major_label(label).value
+                    df.iloc[row, 8] = self._bill_label_to_major_label(label).value
                     df.iloc[row, 9] = label.value
                     continue
         return df
 
-    def check_rules(self, df, rules) -> bool:
+    def _check_rules(self, df, rules) -> bool:
         for condition_dict in rules:
             field_match_ok = False
             for column, condition in condition_dict.items():
@@ -35,7 +34,7 @@ class Annotator:
                 return False
         return True
 
-    def bill_label_to_major_label(self, bill_label):
+    def _bill_label_to_major_label(self, bill_label):
         for major_label in MajorLabels:
             if major_label.value in bill_label.value:
                 return major_label

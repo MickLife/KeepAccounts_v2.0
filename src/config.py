@@ -162,8 +162,8 @@ class AutoLabelRules:
         rule: List[Condition1, Condition2, ...]  Condition 全部满足, rule才生效
         Condition: Dict{'列名': regex表达式 or 数值范围tuple(min, max)}  只要有一个列的数值匹配, condition就生效
         """
-        food_brand = '麦当劳|肯德基|海底捞|和府捞面|无名缘米粉|满座儿|牛肉面|美食|外婆家|西北莜面村|必胜客|潘多拉(北京)餐饮有限公司|' \
-                     '潘多拉美食广场|火锅|串串|水煮鱼|自助餐|家常菜|川菜|烤肉|韩国料理'
+        food_brand = '麦当劳|肯德基|海底捞|和府捞面|无名缘米粉|满座儿|牛肉面|美食|外婆家|西北莜面村|必胜客|潘多拉|' \
+                     '火锅|串串|水煮鱼|自助餐|家常菜|川菜|烤肉|韩国料理'
 
         self.rules = {
             BillLabels.food_simple:

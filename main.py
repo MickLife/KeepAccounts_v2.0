@@ -21,9 +21,7 @@ def main():
     data.amount_confirm()
 
     # 标注
-    data.data_to_append = data.annotator.do_annotation(data.data_to_append)
-    # todo: 确认金额、分类结果，不正确的实现人工订正
-    # todo: 人工/追加其他来源数据
+    data.data_to_append = data.annotator.do_auto_annotation(data.data_to_append)
 
     # 数据存储
     data.append()
