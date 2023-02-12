@@ -5,7 +5,7 @@ import numpy as np
 from openpyxl.utils import get_column_letter
 
 from src.Annotator import Annotator
-from src.config import MajorLabels, BillLabels
+from src.config import BillLabels
 
 
 class AccountBook:
@@ -20,6 +20,7 @@ class AccountBook:
         self.database = database
         self.data_to_append = pd.DataFrame()
         self.annotator = Annotator()
+        self.balance = self._read_balance()
 
     def __str__(self):
         print('AccountBook:')
@@ -38,16 +39,20 @@ class AccountBook:
         df.astype(self.dtype)
         return df
 
+    def _read_balance(self):
+        return pd.read_excel(self.cfg.DATABASE_PATH, sheet_name='余额')
+
     def save_database(self, path: str):
         with pd.ExcelWriter(path) as writer:
+            self.database = self.database.sort_values(by='日期时间', ascending=True)
+
             self.database.to_excel(writer, sheet_name='Records', index=False)
-            widths = np.array([22, 10, 10, 20, 40, 40, 15, 15, 20, 43])  # 设置excel单元格列宽
+            widths = np.array([22, 10, 10, 20, 40, 40, 15, 15, 10, 43])  # 设置excel单元格列宽
             worksheet = writer.sheets['Records']
             for i, width in enumerate(widths, 1):
                 worksheet.column_dimensions[get_column_letter(i)].width = width
 
-            df = pd.read_excel(self.cfg.DATABASE_PATH, sheet_name='余额')
-            df.to_excel(writer, sheet_name='余额', index=False)
+            self.balance.to_excel(writer, sheet_name='余额', index=False)
             writer.sheets['余额'].column_dimensions[get_column_letter(1)].width = 22
 
             label_name = []
@@ -55,9 +60,9 @@ class AccountBook:
             for label in BillLabels:
                 label_value.append(label.value)
                 label_name.append(label.name)
-            df2 = pd.DataFrame([label_name, label_value]).transpose()
-            df2.columns = ['label.name', 'label.value']
-            df2.to_excel(writer, sheet_name='Labels', index=False)
+            df_labels = pd.DataFrame([label_name, label_value]).transpose()
+            df_labels.columns = ['label.name', 'label.value']
+            df_labels.to_excel(writer, sheet_name='Labels', index=False)
             writer.sheets['Labels'].column_dimensions[get_column_letter(1)].width = 50
             writer.sheets['Labels'].column_dimensions[get_column_letter(2)].width = 50
         print('Saved AccountBook to dir: {}'.format(path))
@@ -75,6 +80,7 @@ class AccountBook:
         df_zfb.insert(8, '分类1', '', allow_duplicates=True)
         df_zfb.insert(9, '分类2', '', allow_duplicates=True)
         df_zfb.columns = self.column_name
+        df_zfb['收支'] = df_zfb['收支'].map(lambda x: x.strip().strip(' ') if isinstance(x, str) else x)
         df_zfb = self._format_arrange(df_zfb)
         print('There are {} AliPay records have been loaded.'.format(df_zfb.shape[0]))
         return df_zfb

@@ -1,11 +1,11 @@
 import os
-from enum import Enum
-
 import numpy as np
+from enum import Enum
 
 
 class GlobalConfig:
     DATABASE_PATH = os.path.join('AccountBooks', 'KeepAccountDataBase.xlsx')  # 账本路径
+    VISUALIZE_PATH = os.path.join('AccountBooks', 'Visualize')
     RECORDS_DIRECTORY = 'records'  # 账单文件夹
     OVERWRITE = False  # True--覆盖写入，False--另存为新账本
     KEYWORD_FILTER = {
@@ -59,6 +59,8 @@ class BillLabels(Enum):
     shopping_office = MajorLabels.shopping.value + sep + '桌面办公'
     shopping_electronics = MajorLabels.shopping.value + sep + '电子产品'
     shopping_cooking_utensil = MajorLabels.shopping.value + sep + '厨具'
+    shopping_furniture = MajorLabels.shopping.value + sep + '家具'
+    shopping_appliance = MajorLabels.shopping.value + sep + '家电'
     shopping_bedding = MajorLabels.shopping.value + sep + '床品、纺织'
     shopping_tools = MajorLabels.shopping.value + sep + '工具、线缆、收纳、支架'
     shopping_toys = MajorLabels.shopping.value + sep + '玩具、摆件'
@@ -83,8 +85,6 @@ class BillLabels(Enum):
     house_loan = MajorLabels.house.value + sep + '房贷'
     house_decoration = MajorLabels.house.value + sep + '房屋装修、维修'
     house_move = MajorLabels.house.value + sep + '搬家'
-    house_furniture = MajorLabels.house.value + sep + '家具'
-    house_appliance = MajorLabels.house.value + sep + '家电'
     house_others = MajorLabels.house.value + sep + '其他'
 
     health_hospital = MajorLabels.health.value + sep + '就医'
