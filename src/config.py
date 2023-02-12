@@ -7,7 +7,7 @@ class GlobalConfig:
     DATABASE_PATH = os.path.join('AccountBooks', 'KeepAccountDataBase.xlsx')  # 账本路径
     VISUALIZE_PATH = os.path.join('AccountBooks', 'Visualize')
     RECORDS_DIRECTORY = 'records'  # 账单文件夹
-    OVERWRITE = False  # True--覆盖写入，False--另存为新账本
+    OVERWRITE = True  # True--覆盖写入，False--另存为新账本
     KEYWORD_FILTER = {
         '支付状态': ['退款', '交易关闭', '提现'],
         '收支': ['其他'],  # 舍弃支付宝理财流水（余额宝除外）

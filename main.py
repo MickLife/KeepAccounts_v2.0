@@ -27,6 +27,8 @@ def main():
     else:
         new_path = f"{config.DATABASE_PATH[:-5]}_{time.strftime('%Y%m%d_%H%M%S', time.localtime())}.xlsx"
         data.save_database(new_path)
+    print('Program finished and will exit after 30 seconds.')
+    time.sleep(30)
 
 
 if __name__ == '__main__':
