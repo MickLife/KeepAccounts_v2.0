@@ -4,10 +4,16 @@ from enum import Enum
 
 
 class GlobalConfig:
-    DATABASE_PATH = os.path.join('AccountBooks', 'KeepAccountDataBase.xlsx')  # 账本路径
-    VISUALIZE_PATH = os.path.join('AccountBooks', 'Visualize')
-    RECORDS_DIRECTORY = 'records'  # 账单文件夹
-    OVERWRITE = True  # True--覆盖写入，False--另存为新账本
+    # DATABASE_PATH 账本路径
+    DATABASE_PATH = os.path.join('AccountBooks', 'KeepAccountDataBase.xlsx')
+
+    # RECORDS_DIRECTORY 账单文件夹
+    RECORDS_DIRECTORY = 'records'
+
+    # OVERWRITE: True--覆盖写入，False--另存为新账本
+    OVERWRITE = True
+
+    # KEYWORD_FILTER: 自定义关键词过滤
     KEYWORD_FILTER = {
         '支付状态': ['退款', '交易关闭', '提现'],
         '收支': ['其他'],  # 舍弃支付宝理财流水（余额宝除外）
@@ -157,10 +163,21 @@ class BillLabels(Enum):
 
 class AutoLabelRules:
     def __init__(self):
-        """
+        """自动标注规则
         self.rules: Dict{BillLabels: rule}
         rule: List[Condition1, Condition2, ...]  Condition 全部满足, rule才生效
         Condition: Dict{'列名': regex表达式 or 数值范围tuple(min, max)}  只要有一个列的数值匹配, condition就生效
+
+        模板
+        self.rule = {
+            BillLabels.food_cook:
+                [
+                    {'收支': '支出|收入'},
+                    {'来源': '支付宝|微信'},
+                    {'交易对方': '', '商品': ''},
+                    {'金额': (0, np.inf)}
+                ],
+        }
         """
         food_brand = '麦当劳|肯德基|海底捞|和府捞面|无名缘米粉|满座儿|牛肉面|美食|外婆家|西北莜面村|必胜客|潘多拉|' \
                      '火锅|串串|水煮鱼|自助餐|家常菜|川菜|烤肉|韩国料理'
@@ -242,15 +259,5 @@ class AutoLabelRules:
                     {'收支': '收入'},
                     {'来源': '支付宝'},
                     {'商品': '余额宝.+收益发放'},
-                ],
-        }
-
-        self.emtpy_rule = {
-            BillLabels.food_cook:
-                [
-                    {'收支': '支出|收入'},
-                    {'来源': '支付宝|微信'},
-                    {'交易对方': '', '商品': ''},
-                    {'金额': (0, np.inf)}
                 ],
         }
